@@ -27,6 +27,8 @@ namespace OA.Repo
 
         public async Task<IEnumerable<T>> GetAll(int buildingId, int objectId, int dataFieldId, DateTime? startTime, DateTime? endTime)
         {
+            DateTime st = (DateTime)startTime;
+            DateTime et = (DateTime)endTime;
             var list = await _context.Readings.ToListAsync();
 
             if (buildingId > 0)
@@ -41,8 +43,9 @@ namespace OA.Repo
             {
                 list = list.Where(b => b.DataFieldId == dataFieldId).ToList();
             }
-            if (startTime.HasValue && endTime.HasValue )
+           if (startTime.HasValue && endTime.HasValue && st.Year!=1970&&et.Year!=1970)
             {
+               
                 list = list.Where(b => b.TimeStamp >= startTime && b.TimeStamp <= endTime).ToList();
             }
 

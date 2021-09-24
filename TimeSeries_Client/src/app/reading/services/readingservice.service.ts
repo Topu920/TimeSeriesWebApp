@@ -32,12 +32,15 @@ export class ReadingserviceService {
   }
 
   GetReadingData(buildingId:number,ObjectId:number,dataId:number,fData:Date,tDate:Date): Observable<any>{
-    console.log(fData);
-    const datePipe = new DatePipe('en-US');
     
+    const datePipe = new DatePipe('en-US');
+    const d: Date = new Date(); 
     var fd = datePipe.transform(fData, 'yyyy-MM-dd');
     var td = datePipe.transform(tDate, 'yyyy-MM-dd');
-      
+    
+
+    console.log(fd);
+    
     return this.http.get<any[]>("http://localhost:13764/api/Reading/GetReadingList?buildingId="+Number(buildingId)+"&objectId="+Number(ObjectId)+"&dataFieldId="+Number(dataId)+"&startTime="+fd+"&endTime="+td, {
     });
   }
